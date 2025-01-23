@@ -17,23 +17,18 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Node.js version
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
           node-version: '20.x'
 
-      - name: npm install, build, and maybe test ;)
+      - name: npm install, build, and test
         run: |
           npm install
           npm run build --if-present
-          # npm run test --if-present
-
-      - name: List files before
-        run: ls -R ./dist/angular19-web/*
+          npm run test --if-present
 
       - name: Zip artifact for deployment
-        run: |
-          cd ./dist/angular19-web
-          zip -r ../../release.zip ./*
+        run: zip release.zip ./* -r
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -58,16 +53,13 @@ jobs:
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
-
-      - name: List files after
-        run: ls -R ./
-
+      
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_388FEEB261EC4F4D821AD4E2222F62D0 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_2CF2B54B29064BAA973F792A3F61FA06 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_3CF59B87BBDD40F3B034172A7EB61D43 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_3364B9356CE344BFBEE69AC0ACCF8E74 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_E6AD842479CB4EBCBC2C76E0D1B835B5 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_B09F8F54ED6F48F59902352DD4F15CDB }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
