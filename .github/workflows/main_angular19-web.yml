@@ -27,8 +27,8 @@ jobs:
           npm run build --if-present
           # npm run test --if-present
 
-      #- name: List files before
-      #  run: ls -R ./
+      - name: List files before
+        run: ls -R ./dist/angular19-web/*
 
       - name: Zip artifact for deployment
         run: zip -r release.zip ./dist/angular19-web/*
